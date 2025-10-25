@@ -1,0 +1,56 @@
+---
+layout: base.njk
+stylesheets:
+  - /assets/css/issue.css
+---
+
+{% from "macros/seo.njk" import jsonld %}
+{% set article = issue or {} %}
+{% set title = article.title %}
+
+<article class="issue" aria-labelledby="issue-title">
+  <header class="issue__header">
+    <p class="issue__return"><a href="/">← Back to archive</a></p>
+    <h1 id="issue-title">{{ article.title }}</h1>
+    <div class="issue__meta">
+      {% if article.published_on %}
+        <time datetime="{{ article.published_on }}">{{ article.published_on | date("MMMM d, yyyy") }}</time>
+      {% endif %}
+    </div>
+    {% set published_on = article.published_on %}
+    {% include "components/disclaimer.njk" %}
+  </header>
+  <div class="issue__body">
+    {{ article.content_html | safe }}
+  </div>
+
+  {% if pagination.pages | length > 1 %}
+    <nav class="issue__pager" aria-label="Issue navigation">
+      {% if pagination.href.previous %}
+        <a class="issue__pager-link" href="{{ pagination.href.previous }}">← Previous issue</a>
+      {% endif %}
+      {% if pagination.href.next %}
+        <a class="issue__pager-link" href="{{ pagination.href.next }}">Next issue →</a>
+      {% endif %}
+    </nav>
+  {% endif %}
+</article>
+
+{% if metadata and page.url %}
+  {{ jsonld({
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": article.title,
+    "datePublished": article.published_on,
+    "author": {
+      "@type": "Person",
+      "name": metadata.author.name
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": metadata.author.name
+    },
+    "mainEntityOfPage": metadata.base_url + page.url,
+    "image": metadata.social_image
+  }) }}
+{% endif %}

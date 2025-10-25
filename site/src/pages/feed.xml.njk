@@ -1,0 +1,27 @@
+---
+permalink: /feed.xml
+layout: null
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ metadata.site_title }}</title>
+  <link href="{{ metadata.base_url }}/feed.xml" rel="self" />
+  <link href="{{ metadata.base_url }}" />
+  <updated>{{ (issues.issues[0].published_on or date) | date("yyyy-MM-dd'T'HH:mm:ss'Z'") }}</updated>
+  <id>{{ metadata.base_url }}/</id>
+  <author>
+    <name>{{ metadata.author.name }}</name>
+  </author>
+  {% for article in issues.issues %}
+    <entry>
+      <title>{{ article.title }}</title>
+      <link href="{{ metadata.base_url }}/issues/{{ article.slug }}/" />
+      <id>{{ metadata.base_url }}/issues/{{ article.slug }}/</id>
+      {% if article.published_on %}
+        <updated>{{ article.published_on }}T00:00:00Z</updated>
+      {% endif %}
+      <summary type="html"><![CDATA[{{ article.summary or '' }}]]></summary>
+    </entry>
+  {% endfor %}
+</feed>

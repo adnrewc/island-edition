@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install dependencies
+        run: npm install
+        working-directory: site
+
+      - name: Build site
+        run: npm run build
+        working-directory: site
+
+      - name: Validate HTML
+        run: npm run lint:html
+        working-directory: site
+
+      - name: Serve built site
+        run: npx http-server _site -p 5000 &
+        working-directory: site
+
+      - name: Wait for server
+        run: |
+          for i in {1..10}; do
+            nc -z localhost 5000 && exit 0
+            sleep 3
+          done
+          echo "Server did not start" >&2
+          exit 1
+        shell: bash
+
+      - name: Accessibility audit
+        run: npm run lint:a11y
+        working-directory: site
+
+      - name: Link check
+        run: npm run lint:links
+        working-directory: site
+
+      - name: Lighthouse
+        run: npm run test:lighthouse
+        working-directory: site

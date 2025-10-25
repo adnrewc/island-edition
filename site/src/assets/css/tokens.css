@@ -1,0 +1,49 @@
+:root {
+  /* Colors */
+  --color-background: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-primary: #1f4da8;
+  --color-primary-dark: #113270;
+  --color-secondary: #4f7bd9;
+  --color-accent: #0fb8d3;
+  --color-text: #1d2330;
+  --color-text-muted: #4f5b73;
+  --color-border: #d7deed;
+  --color-disclaimer-bg: #eef3ff;
+
+  /* Typography */
+  --font-family-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-family-serif: "Source Serif Pro", Georgia, serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-hero: clamp(2.5rem, 6vw, 3.5rem);
+
+  /* Spacing */
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Layout */
+  --max-width-page: 72rem;
+  --max-width-text: 48rem;
+  --shadow-elevated: 0 24px 48px rgba(17, 50, 112, 0.08);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #0f172a;
+    --color-surface: #16213c;
+    --color-text: #f8fafc;
+    --color-text-muted: #cbd5f5;
+    --color-border: rgba(79, 91, 115, 0.4);
+    --color-disclaimer-bg: rgba(31, 77, 168, 0.25);
+  }
+}

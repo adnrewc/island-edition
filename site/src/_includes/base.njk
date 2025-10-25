@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {% import "macros/seo.njk" as seo %}
+    {{ seo.head(title, metadata, page) }}
+    <link rel="preload" href="/assets/css/tokens.css" as="style" />
+    <link rel="stylesheet" href="/assets/css/tokens.css" />
+    <link rel="stylesheet" href="/assets/css/base.css" />
+    {% if stylesheets %}
+      {% for stylesheet in stylesheets %}
+        <link rel="stylesheet" href="{{ stylesheet }}" />
+      {% endfor %}
+    {% endif %}
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="header">
+      <div class="wrapper">
+        {% include "components/site-nav.njk" %}
+      </div>
+    </header>
+    <main id="main" aria-labelledby="hero-title">
+      {{ content | safe }}
+    </main>
+    <footer class="footer">
+      <div class="wrapper">
+        <p>Island Edition was a weekly newsletter by Andrew Chisholm (2022–2023).</p>
+      </div>
+    </footer>
+  </body>
+</html>

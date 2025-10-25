@@ -1,0 +1,94 @@
+---
+layout: base.njk
+title: Island Edition Archive
+eleventyNavigation:
+  key: Home
+  order: 1
+permalink: /index.html
+stylesheets:
+  - /assets/css/home.css
+  - /assets/css/archive.css
+---
+
+{% from "macros/seo.njk" import jsonld %}
+{{ jsonld({
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": metadata.site_title,
+  "url": metadata.base_url,
+  "description": metadata.description,
+  "creator": {
+    "@type": "Person",
+    "name": metadata.author.name,
+    "description": metadata.author.bio
+  }
+}) }}
+
+{% include "components/hero.njk" %}
+
+<section class="section section--narrow" aria-labelledby="about">
+  <div class="wrapper">
+    <h2 id="about">What was Island Edition?</h2>
+    <p>
+      Island Edition was a weekly newsletter launched by {{ metadata.author.name }} in {{ metadata.timeline.launch_year }}.
+      It celebrated the people, landscapes, and small discoveries across the islands through essays, photography, and curated links.
+    </p>
+    <p>
+      The series wrapped in {{ metadata.timeline.sunset_month_year }} to create space for new storytelling experiments.
+      This archive preserves every issue exactly as it was delivered to subscribers, including original formatting and media.
+    </p>
+  </div>
+</section>
+
+<section class="section section--narrow" aria-labelledby="timeline">
+  <div class="wrapper">
+    <h2 id="timeline">Timeline at a Glance</h2>
+    <ul class="timeline">
+      <li>
+        <strong>{{ metadata.timeline.launch_year }}</strong>
+        <span>Newsletter launches to celebrate island voices.</span>
+      </li>
+      <li>
+        <strong>2022–2023</strong>
+        <span>Weekly letters delivered every Wednesday with essays, photos, and community highlights.</span>
+      </li>
+      <li>
+        <strong>{{ metadata.timeline.sunset_month_year }}</strong>
+        <span>{{ metadata.timeline.sunset_reason }}</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="archive" aria-labelledby="archive-heading">
+  <div class="wrapper">
+    <h2 id="archive-heading">Newsletter archive</h2>
+    {{ jsonld({
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Island Edition Archive Issues",
+      "url": metadata.base_url + page.url,
+      "numberOfItems": issues.issues | length
+    }) }}
+    {{ jsonld({
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": metadata.base_url
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Archive",
+          "item": metadata.base_url + page.url
+        }
+      ]
+    }) }}
+    {% import "components/archive-list.njk" as archives %}
+    {{ archives.archiveList(issues.issues) }}
+  </div>
+</section>
