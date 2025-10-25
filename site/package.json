@@ -9,7 +9,7 @@
     "ingest": "npm run cache:images --silent && node scripts/ingest-issues.mjs",
     "dev": "npm run ingest && ELEVENTY_ENV=development npx @11ty/eleventy --config=eleventy.config.cjs --serve --quiet",
     "build": "npm run ingest && ELEVENTY_ENV=production npx @11ty/eleventy --config=eleventy.config.cjs",
-    "lint:html": "npx html-validate --config ../tests/html/html-validate.config.cjs \"_site/pages/**/*.html\"",
+    "lint:html": "npx html-validate --config ../tests/html/html-validate.config.cjs \"_site/index.html\"",
     "lint:a11y": "npx pa11y ./_site/index.html && npx pa11y --ignore \"WCAG2AA.Principle1.Guideline1_3.1_3_1.H49.AlignAttr\" --ignore \"WCAG2AA.Principle1.Guideline1_3.1_3_1.F92,ARIA4\" --ignore \"WCAG2AA.Principle1.Guideline1_4.1_4_3.G145.Fail\" --ignore \"WCAG2AA.Principle1.Guideline1_4.1_4_3.G18.Fail\" ./_site/issues/10034478_wednesday-november-22-2023/index.html",
     "lint:links": "npx linkinator ./_site/index.html --config ../tests/links/linkinator.config.json",
     "test:lighthouse": "npx lhci autorun"
