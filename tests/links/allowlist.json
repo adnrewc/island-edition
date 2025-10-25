@@ -1,0 +1,8 @@
+{
+  "description": "Links historically known to fail but preserved for archival accuracy.",
+  "links": [
+    "https://twitter.com/*",
+    "https://instagram.com/*"
+  ],
+  "notes": "Update this list when linkinator reports expected archival failures so they can be triaged deliberately."
+}

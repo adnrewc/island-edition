@@ -1,0 +1,23 @@
+{% macro head(title, metadata, page) %}
+  {% set pageTitle = title or metadata.site_title %}
+  <title>{{ pageTitle }}</title>
+  <meta name="description" content="{{ metadata.description }}" />
+  <meta property="og:site_name" content="{{ metadata.site_title }}" />
+  <meta property="og:title" content="{{ pageTitle }}" />
+  <meta property="og:description" content="{{ metadata.description }}" />
+  {% if metadata.social_image %}
+    <meta property="og:image" content="{{ metadata.social_image }}" />
+    <meta name="twitter:card" content="summary_large_image" />
+  {% endif %}
+  {% if page.url %}
+    <link rel="canonical" href="{{ metadata.base_url }}{{ page.url }}" />
+    <meta property="og:url" content="{{ metadata.base_url }}{{ page.url }}" />
+  {% endif %}
+  <meta property="og:type" content="{{ page.og_type or 'website' }}" />
+{% endmacro %}
+
+{% macro jsonld(data) %}
+  <script type="application/ld+json">
+    {{ data | dump | safe }}
+  </script>
+{% endmacro %}

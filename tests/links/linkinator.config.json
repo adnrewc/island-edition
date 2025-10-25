@@ -1,0 +1,17 @@
+{
+  "concurrency": 4,
+  "skip": [
+    "mailto:*",
+    "tel:*",
+    "https://twitter.com/*",
+    "https://instagram.com/*",
+    "https://islandedition.ca/*"
+  ],
+  "timeout": 30000,
+  "markdown": false,
+  "retry": {
+    "retries": 2,
+    "factor": 2,
+    "minTimeout": 1000
+  }
+}

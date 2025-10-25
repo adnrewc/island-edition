@@ -1,0 +1,14 @@
+---
+layout: issue.njk
+pagination:
+  data: issues.issues
+  size: 1
+  alias: issue
+permalink: "/issues/{{ issue.slug }}/"
+og_type: article
+eleventyComputed:
+  title: "{{ issue.title }}"
+  published_on: "{{ issue.published_on }}"
+  summary: "{{ issue.summary }}"
+---
+{{ issue.content_html | safe }}

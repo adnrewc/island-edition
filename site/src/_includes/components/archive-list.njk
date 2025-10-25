@@ -1,0 +1,31 @@
+{% macro archiveList(issues) %}
+  {% macro renderEntry(issue) %}
+    <article class="archive-card">
+      <h3><a href="/issues/{{ issue.slug }}/">{{ issue.title }}</a></h3>
+      {% if issue.published_on %}
+        <p class="archive-card__meta">
+          <time datetime="{{ issue.published_on }}">{{ issue.published_on | date("MMMM d, yyyy") }}</time>
+        </p>
+      {% endif %}
+      {% if issue.summary %}
+        <p class="archive-card__summary">{{ issue.summary }}</p>
+      {% endif %}
+    </article>
+  {% endmacro %}
+
+  {% set grouped = issues | groupby("year") %}
+
+  <div class="archive">
+    {% for group in grouped | reverse %}
+      {% set year = group.grouper or "Undated" %}
+      <section class="archive__group" aria-labelledby="archive-year-{{ year }}">
+        <h3 id="archive-year-{{ year }}">{{ year }}</h3>
+        <div class="archive__grid">
+          {% for issue in group.list %}
+            {{ renderEntry(issue) }}
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  </div>
+{% endmacro %}
