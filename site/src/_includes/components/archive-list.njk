@@ -1,4 +1,4 @@
-{% macro archiveList(issues) %}
+{% macro archiveList(groups) %}
   {% macro renderEntry(issue) %}
     <article class="archive-card">
       <h3><a href="/issues/{{ issue.slug }}/">{{ issue.title }}</a></h3>
@@ -13,15 +13,12 @@
     </article>
   {% endmacro %}
 
-  {% set grouped = issues | groupby("year") %}
-
   <div class="archive">
-    {% for group in grouped | reverse %}
-      {% set year = group.grouper or "Undated" %}
-      <section class="archive__group" aria-labelledby="archive-year-{{ year }}">
-        <h3 id="archive-year-{{ year }}">{{ year }}</h3>
+    {% for group in groups %}
+      <section class="archive__group" aria-labelledby="archive-year-{{ group.year }}">
+        <h3 id="archive-year-{{ group.year }}">{{ group.year }}</h3>
         <div class="archive__grid">
-          {% for issue in group.list %}
+          {% for issue in group.items %}
             {{ renderEntry(issue) }}
           {% endfor %}
         </div>

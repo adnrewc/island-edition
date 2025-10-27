@@ -64,8 +64,9 @@ function extractPublishedOn(root) {
 }
 
 function inferDateFromSlug(slug) {
-  const normalized = slug.replace(/-/g, ' ');
-  const parsed = Date.parse(normalized);
+  const normalized = slug.replace(/_/g, ' ').replace(/-/g, ' ');
+  const trimmed = normalized.replace(/^\d+\s*/, '');
+  const parsed = Date.parse(trimmed);
   if (!Number.isNaN(parsed)) {
     return new Date(parsed).toISOString().slice(0, 10);
   }
@@ -108,8 +109,34 @@ async function ingest() {
     return a.slug < b.slug ? 1 : -1;
   });
 
+  const groupedMap = new Map();
+  for (const issue of issues) {
+    const key = issue.year || 'Undated';
+    if (!groupedMap.has(key)) {
+      groupedMap.set(key, []);
+    }
+    groupedMap.get(key).push(issue);
+  }
+
+  const groups = Array.from(groupedMap.entries())
+    .sort(([yearA], [yearB]) => {
+      const numericA = Number.parseInt(yearA, 10);
+      const numericB = Number.parseInt(yearB, 10);
+      if (Number.isNaN(numericA) && Number.isNaN(numericB)) {
+        return 0;
+      }
+      if (Number.isNaN(numericA)) {
+        return 1;
+      }
+      if (Number.isNaN(numericB)) {
+        return -1;
+      }
+      return numericB - numericA;
+    })
+    .map(([year, items]) => ({ year, items }));
+
   await mkdir(DATA_DIR, { recursive: true });
-  await writeFile(OUTPUT_FILE, JSON.stringify({ issues }, null, 2));
+  await writeFile(OUTPUT_FILE, JSON.stringify({ issues, groups }, null, 2));
   console.log(`Ingested ${issues.length} issues to ${OUTPUT_FILE}`);
 }
 
