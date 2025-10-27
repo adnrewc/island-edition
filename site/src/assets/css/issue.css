@@ -42,6 +42,7 @@
   background: var(--color-surface);
   border-radius: 16px;
   padding: var(--space-4);
+  color-scheme: light;
 }
 
 .issue__body table {
@@ -79,8 +80,15 @@
   padding-right: var(--space-4) !important;
 }
 
-.issue__body [style*="background-color"],
-.issue__body [style*="background"],
+.issue__body [style*="background-image" i],
+.issue__body table[background],
+.issue__body td[background] {
+  background-image: none !important;
+  background: transparent !important;
+}
+
+.issue__body [style*="background-color" i],
+.issue__body [style*="background" i],
 .issue__body table[bgcolor],
 .issue__body td[bgcolor],
 .issue__body .es-wrapper-color {
@@ -88,15 +96,14 @@
   color: var(--color-text) !important;
 }
 
-.issue__body span[style*="color:#ffffff"],
-.issue__body span[style*="color: #ffffff"],
-.issue__body span[style*="color:#fefefe"],
-.issue__body span[style*="color:#f4f4f4"],
-.issue__body p[style*="color:#ffffff"],
-.issue__body p[style*="color:#fff"],
-.issue__body p[style*="color:#f4f4f4"],
-.issue__body a[style*="color:#ffffff"],
-.issue__body a[style*="color:#fff"] {
+.issue__body span[style*="color:#ffffff" i],
+.issue__body span[style*="color:#fefefe" i],
+.issue__body span[style*="color:#f4f4f4" i],
+.issue__body p[style*="color:#ffffff" i],
+.issue__body p[style*="color:#fff" i],
+.issue__body p[style*="color:#f4f4f4" i],
+.issue__body a[style*="color:#ffffff" i],
+.issue__body a[style*="color:#fff" i] {
   color: var(--color-text) !important;
 }
 
@@ -104,7 +111,13 @@
 .issue__body th,
 .issue__body p,
 .issue__body span,
-.issue__body li {
+.issue__body li,
+.issue__body strong,
+.issue__body b,
+.issue__body em,
+.issue__body i,
+.issue__body font,
+.issue__body div {
   color: var(--color-text) !important;
 }
 
