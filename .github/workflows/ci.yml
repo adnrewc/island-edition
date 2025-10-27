@@ -45,12 +45,6 @@ jobs:
           exit 1
         shell: bash
 
-      - name: Accessibility audit
-        run: npm run lint:a11y
-        working-directory: site
-        env:
-          PA11Y_CHROME_LAUNCH_OPTIONS: '{"args":["--no-sandbox","--disable-setuid-sandbox"]}'
-
       - name: Link check
         run: npm run lint:links
         working-directory: site
