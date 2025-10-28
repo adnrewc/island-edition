@@ -28,35 +28,69 @@ stylesheets:
 
 <section class="section section--narrow" aria-labelledby="about">
   <div class="wrapper">
-    <h2 id="about">What was Island Edition?</h2>
-    <p>
-      Island Edition was a weekly newsletter launched by {{ metadata.author.name }} in {{ metadata.timeline.launch_year }}.
-      It celebrated the people, landscapes, and small discoveries across the islands through essays, photography, and curated links.
+    <h2 id="about">Inside Island Edition</h2>
+    <p class="section__lede">
+      Curated by {{ metadata.author.name }}, Island Edition blended reporting, commentary, and personal notes to document life across Prince Edward Island.
     </p>
     <p>
-      The series wrapped in {{ metadata.timeline.sunset_month_year }} to create space for new storytelling experiments.
-      This archive preserves every issue exactly as it was delivered to subscribers, including original formatting and media.
+      Each issue stitched together civic decisions from Charlottetown, neighbourhood celebrations from Summerside, new businesses on the North Shore, and cultural moments that made island life unforgettable.
     </p>
+    <ul class="feature-list">
+      <li><strong>Community spotlights:</strong> profiles of teachers, organizers, farmers, and creators shaping the province.</li>
+      <li><strong>Civic explainers:</strong> plain-language breakdowns of council debates, budgets, and provincial policy shifts.</li>
+      <li><strong>Weekend inspiration:</strong> events listings, outdoor ideas, and photo essays to help subscribers plan their week.</li>
+    </ul>
   </div>
 </section>
 
+{% if metadata.stats %}
+<section class="section section--muted" aria-labelledby="stats">
+  <div class="wrapper">
+    <h2 id="stats">Archive by the numbers</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <span class="stat-card__number">{{ metadata.stats.issues }}</span>
+        <span class="stat-card__label">Issues preserved</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__number">{{ metadata.stats.months_active }}</span>
+        <span class="stat-card__label">Months of weekly coverage</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__number">{{ metadata.stats.average_read_time }}</span>
+        <span class="stat-card__label">Average reading time</span>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
 <section class="section section--narrow" aria-labelledby="timeline">
   <div class="wrapper">
-    <h2 id="timeline">Timeline at a Glance</h2>
+    <h2 id="timeline">How the newsletter unfolded</h2>
     <ul class="timeline">
       <li>
         <strong>{{ metadata.timeline.launch_year }}</strong>
-        <span>Newsletter launches to celebrate island voices.</span>
+        <span>Launches with a simple promise: capture the cadence of island life for curious locals and expats.</span>
       </li>
       <li>
-        <strong>2022–2023</strong>
-        <span>Weekly letters delivered every Wednesday with essays, photos, and community highlights.</span>
+        <strong>80 weekly issues</strong>
+        <span>A Wednesday ritual packed with reporting, reader Q&amp;As, and curated links that celebrated community wins.</span>
       </li>
       <li>
         <strong>{{ metadata.timeline.sunset_month_year }}</strong>
         <span>{{ metadata.timeline.sunset_reason }}</span>
       </li>
     </ul>
+  </div>
+</section>
+
+<section class="section section--narrow" aria-labelledby="how-to">
+  <div class="wrapper">
+    <h2 id="how-to">How to browse the archive</h2>
+    <p>
+      Jump straight to the issues using the index below, or filter by year to quickly revisit a season. Each page reproduces the original email, images, and links so researchers, storytellers, and long-time readers can reference the source material exactly as it appeared in inboxes.
+    </p>
   </div>
 </section>
 

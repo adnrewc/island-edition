@@ -1,15 +1,34 @@
 <section class="hero section" aria-labelledby="hero-title">
   <div class="wrapper hero__inner">
-    <figure class="hero__logo">
+    <div class="hero__content">
+      <p class="hero__eyebrow">Weekly letters · {{ metadata.timeline.launch_year }}–{{ metadata.timeline.sunset_month_year }}</p>
+      <h1 id="hero-title">Island stories delivered with heart</h1>
+      <p class="hero__summary">
+        Island Edition connected {{ metadata.stats.subscribers }} subscribers with civic updates, neighbourhood wins, and the everyday magic of Prince Edward Island—every Wednesday morning.
+      </p>
+      <div class="hero__actions">
+        <a class="hero__cta" href="#archive">Browse the archive</a>
+        <a class="hero__secondary" href="#about">What you'll find</a>
+      </div>
+      {% if metadata.stats %}
+      <ul class="hero__stats" role="list">
+        <li class="hero__stat">
+          <span class="hero__stat-number">{{ metadata.stats.subscribers }}</span>
+          <span class="hero__stat-label">Subscribers</span>
+        </li>
+        <li class="hero__stat">
+          <span class="hero__stat-number">{{ metadata.stats.open_rate }}</span>
+          <span class="hero__stat-label">Average open rate</span>
+        </li>
+        <li class="hero__stat">
+          <span class="hero__stat-number">{{ metadata.stats.issues }}</span>
+          <span class="hero__stat-label">Issues preserved</span>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+    <figure class="hero__media">
       <img src="/assets/images/logo-archive.png" alt="Island Edition Archive" width="320" height="235" loading="lazy" decoding="async">
     </figure>
-    <div class="hero__content">
-      <p class="hero__eyebrow">Island Edition · 2022–2023</p>
-      <h1 id="hero-title">{{ metadata.tagline }}</h1>
-      <p class="hero__summary">
-        Island Edition chronicled the rhythm of island life through weekly letters from Andrew Chisholm. Explore the archive to revisit stories, photos, and perspectives that defined the series from {{ metadata.timeline.launch_year }} through {{ metadata.timeline.sunset_month_year }}.
-      </p>
-      <a class="hero__cta" href="#archive">Browse the archive</a>
-    </div>
   </div>
 </section>

@@ -1,7 +1,7 @@
 {
   "site_title": "Island Edition Archive",
-  "tagline": "An archive of weekly newsletter about Prince Edward Island.",
-  "description": "Explore the Island Edition newsletter archive (2022–2023) curated by Andrew Chisholm with commentary on island life, stories, and events.",
+  "tagline": "A weekly briefing on Prince Edward Island life, politics, and community.",
+  "description": "Browse 79 archived issues of Island Edition—Andrew Chisholm’s weekly newsletter covering local stories, civic conversations, and island culture with a devoted audience.",
   "base_url": "https://islandedition.ca",
   "author": {
     "name": "Andrew Chisholm",
@@ -11,6 +11,13 @@
     "launch_year": 2022,
     "sunset_month_year": "November 2023",
     "sunset_reason": "The weekly publication concluded in late 2023 to explore new storytelling formats while keeping the archive available for readers."
+  },
+  "stats": {
+    "subscribers": "7,500",
+    "open_rate": "85%",
+    "issues": 79,
+    "months_active": 18,
+    "average_read_time": "4 min"
   },
   "social_image": "/assets/images/social-card.png",
   "logo": "/assets/images/logo-archive.png"

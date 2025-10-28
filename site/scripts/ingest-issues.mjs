@@ -8,6 +8,82 @@ const ROOT = resolve(__dirname, '..', '..');
 const ISSUES_DIR = resolve(ROOT, '.issues');
 const DATA_DIR = resolve(__dirname, '..', 'src', 'data');
 const OUTPUT_FILE = resolve(DATA_DIR, 'issues.json');
+const SUBJECTS_FILE = resolve(DATA_DIR, 'subjects.json');
+
+const MONTH_PATTERN =
+  /(january|february|march|april|may|june|july|august|september|october|november|december)/i;
+
+function parseDateString(candidate) {
+  if (!candidate) return null;
+  const normalized = candidate
+    .replace(/\u00a0/g, ' ')
+    .replace(/[_-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const lowercased = normalized.toLowerCase();
+  const replacements = [
+    ['sept', 'september'],
+    ['sep', 'september'],
+    ['jan', 'january'],
+    ['feb', 'february'],
+    ['mar', 'march'],
+    ['apr', 'april'],
+    ['aug', 'august'],
+    ['oct', 'october'],
+    ['nov', 'november'],
+    ['dec', 'december']
+  ];
+  let working = lowercased;
+  for (const [abbr, full] of replacements) {
+    working = working.replace(new RegExp(`\\b${abbr}\\b`, 'g'), full);
+  }
+  const match = working.match(
+    new RegExp(`${MONTH_PATTERN.source}\\s+\\d{1,2}(?:st|nd|rd|th)?(?:,)?\\s+\\d{4}`, 'i')
+  );
+  if (!match) {
+    return null;
+  }
+  const cleaned = match[0].replace(/(st|nd|rd|th)/gi, '').replace(/,/g, '');
+  const parsed = Date.parse(cleaned);
+  if (Number.isNaN(parsed)) {
+    return null;
+  }
+  return new Date(parsed).toISOString().slice(0, 10);
+}
+
+async function loadSubjects() {
+  try {
+    const raw = await readFile(SUBJECTS_FILE, 'utf8');
+    const entries = JSON.parse(raw);
+    return new Map(
+      entries
+        .filter((entry) => entry.date && entry.subject)
+        .map((entry) => [entry.date, entry.subject])
+    );
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      return new Map();
+    }
+    throw error;
+  }
+}
+
+function formatDateTitle(isoDate) {
+  if (!isoDate) return null;
+  const parts = isoDate.split('-').map(Number);
+  if (parts.length !== 3 || parts.some(Number.isNaN)) {
+    return null;
+  }
+  const [year, month, day] = parts;
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return new Intl.DateTimeFormat('en-CA', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC'
+  }).format(date);
+}
 
 async function loadIssueFiles() {
   try {
@@ -60,17 +136,26 @@ function extractPublishedOn(root) {
   if (metaDate && metaDate.getAttribute('content')) {
     return metaDate.getAttribute('content');
   }
+  const titleEl = root.querySelector('title');
+  if (titleEl) {
+    const parsed = parseDateString(titleEl.text);
+    if (parsed) {
+      return parsed;
+    }
+  }
+  const heading = root.querySelector('h1');
+  if (heading) {
+    const parsed = parseDateString(heading.text);
+    if (parsed) {
+      return parsed;
+    }
+  }
   return null;
 }
 
 function inferDateFromSlug(slug) {
-  const normalized = slug.replace(/_/g, ' ').replace(/-/g, ' ');
-  const trimmed = normalized.replace(/^\d+\s*/, '');
-  const parsed = Date.parse(trimmed);
-  if (!Number.isNaN(parsed)) {
-    return new Date(parsed).toISOString().slice(0, 10);
-  }
-  return null;
+  const trimmed = slug.replace(/^\d+_?/, '');
+  return parseDateString(trimmed);
 }
 
 async function buildIssueRecord(filePath) {
@@ -94,9 +179,25 @@ async function buildIssueRecord(filePath) {
 async function ingest() {
   const issueFiles = await loadIssueFiles();
   const issues = [];
+  const subjects = await loadSubjects();
 
   for (const filePath of issueFiles) {
     const record = await buildIssueRecord(filePath);
+    if (record.published_on && subjects.has(record.published_on)) {
+      record.title = subjects.get(record.published_on);
+    } else {
+      const looksAuto =
+        !record.title ||
+        record.title === record.slug ||
+        /[_]{1,}/.test(record.title) ||
+        /^\d/.test(record.title);
+      if (looksAuto) {
+        const formatted = formatDateTitle(record.published_on);
+        if (formatted) {
+          record.title = formatted;
+        }
+      }
+    }
     issues.push(record);
   }
 
