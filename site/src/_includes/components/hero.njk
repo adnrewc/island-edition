@@ -1,30 +1,30 @@
 <section class="hero section" aria-labelledby="hero-title">
   <div class="wrapper hero__inner">
     <div class="hero__content">
-      <p class="hero__eyebrow">Weekly letters · {{ metadata.timeline.launch_year }}–{{ metadata.timeline.sunset_month_year }}</p>
-      <h1 id="hero-title">Island stories delivered with heart</h1>
+      <p class="hero__eyebrow">Island Edition archive · {{ metadata.timeline.launch_year }}–{{ metadata.timeline.sunset_month_year }}</p>
+      <h1 id="hero-title">Civic dispatches preserved for curious Islanders</h1>
       <p class="hero__summary">
-        Island Edition connected {{ metadata.stats.subscribers }} subscribers with civic updates, neighbourhood wins, and the everyday magic of Prince Edward Island—every Wednesday morning.
+        From 2022 to 2023 the weekly letter reached {{ metadata.stats.subscribers }} readers, chronicling council debates, cultural moments, and neighbourhood wins. This archive keeps the issues intact for researchers and nostalgic Islanders who want to revisit the stories as they landed.
       </p>
       <div class="hero__actions">
         <a class="hero__cta" href="#archive">Browse the archive</a>
         <a class="hero__secondary" href="#about">What you'll find</a>
       </div>
       {% if metadata.stats %}
-      <ul class="hero__stats" role="list">
-        <li class="hero__stat">
-          <span class="hero__stat-number">{{ metadata.stats.subscribers }}</span>
-          <span class="hero__stat-label">Subscribers</span>
-        </li>
-        <li class="hero__stat">
-          <span class="hero__stat-number">{{ metadata.stats.open_rate }}</span>
-          <span class="hero__stat-label">Average open rate</span>
-        </li>
-        <li class="hero__stat">
-          <span class="hero__stat-number">{{ metadata.stats.issues }}</span>
-          <span class="hero__stat-label">Issues preserved</span>
-        </li>
-      </ul>
+        <ul class="hero__stats" role="list">
+          <li class="hero__stat">
+            <span class="hero__stat-number">{{ metadata.stats.issues }}</span>
+            <span class="hero__stat-label">Issues archived</span>
+          </li>
+          <li class="hero__stat">
+            <span class="hero__stat-number">{{ metadata.stats.months_active }}</span>
+            <span class="hero__stat-label">Months of coverage</span>
+          </li>
+          <li class="hero__stat">
+            <span class="hero__stat-number">{{ metadata.stats.average_read_time }}</span>
+            <span class="hero__stat-label">Avg read time</span>
+          </li>
+        </ul>
       {% endif %}
     </div>
     <figure class="hero__media">

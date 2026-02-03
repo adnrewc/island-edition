@@ -1,10 +1,10 @@
 .issue {
-  width: min(100%, var(--max-width-text));
-  margin: var(--space-12) auto;
+  width: min(100%, 70rem);
+  margin: var(--space-16) auto;
   padding: var(--space-8);
   background: var(--color-surface);
-  border-radius: 20px;
-  border: 1px solid var(--color-border);
+  border-radius: 24px;
+  border: 1px solid rgba(17, 50, 112, 0.08);
   box-shadow: var(--shadow-elevated);
 }
 
@@ -17,7 +17,8 @@
 }
 
 .issue__header h1 {
-  font-size: var(--font-size-2xl);
+  font-size: clamp(2rem, 2vw, 2.5rem);
+  margin-bottom: var(--space-2);
 }
 
 .issue__meta {
@@ -26,23 +27,14 @@
   margin-bottom: var(--space-3);
 }
 
-.issue-disclaimer {
-  background: var(--color-disclaimer-bg);
-  border-left: 4px solid var(--color-primary);
-  padding: var(--space-4);
-  border-radius: 12px;
-  font-size: var(--font-size-sm);
-  margin-top: 0;
-  margin-bottom: var(--space-6);
-}
-
 .issue__body {
-  line-height: 1.7;
+  line-height: 1.8;
   overflow-x: hidden;
-  background: var(--color-surface);
-  border-radius: 16px;
-  padding: var(--space-4);
-  color-scheme: light;
+  background: var(--color-background);
+  border-radius: 20px;
+  padding: var(--space-6);
+  color: var(--color-text);
+  border: 1px solid rgba(17, 50, 112, 0.06);
 }
 
 .issue__body table {
